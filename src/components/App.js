@@ -1,7 +1,7 @@
 import '../index.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../services/authService';
+import {fetchUser} from '../services/authService';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Formik from './Login';
 import { SearchRestaurant } from './SearchRestaurant';
@@ -9,12 +9,11 @@ import { RestaurantDetail } from './RestaurantDetail';
 import { Header } from './Header';
 import { Register } from './Register';
 
-class App extends React.Component {
-  componentDidMount() {
-    this.props.fetchUser();
-  }
-
-  render() {
+const App =(props) => {
+  const { fetchUser } = props;
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
     return (
       <div className="container">
           <BrowserRouter>
@@ -28,7 +27,6 @@ class App extends React.Component {
           </BrowserRouter>
       </div>
   );
-  }
 }
 
-export default connect(null, actions) (App);
+export default connect(null, {fetchUser}) (App);
