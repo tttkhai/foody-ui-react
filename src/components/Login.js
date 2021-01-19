@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withFormik, Form, Field } from 'formik';
-import { Redirect } from 'react-router';
 import * as actions from '../services/authService'
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter } from "react-router-dom";
+import {compose} from "redux"; 
 
-const Login = ({errors, touched})=>{
+const Loginform = ({errors, touched})=>{
     return(
         <Form>
         <div>{ errors.permission }</div>
@@ -28,10 +28,9 @@ const Formik = withFormik({
         }
     }, async handleSubmit(values, { props }){
         console.log("handlesubmit being clicked");
-        props.login(values.username, values.password);
-        // ({type: 'FETCH_USER', payload: user.data})
-        // this.props.history.push('/')
+        await props.login(values.username, values.password);
+        props.history.push('/');
     }
-})(Login)
+})(Loginform)
 
-export default connect(null, actions) (withRouter(Formik))
+export default compose(withRouter, connect(null, actions)) (Formik)

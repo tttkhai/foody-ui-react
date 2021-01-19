@@ -1,4 +1,4 @@
-import { FETCH_USER } from '../services/type';
+import { FETCH_USER } from '../config/type';
 
 export const auth = (state=false, action)=>{
     switch(action.type) {

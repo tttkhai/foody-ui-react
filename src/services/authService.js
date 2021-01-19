@@ -1,24 +1,18 @@
-import { Redirect } from 'react-router';
-import { FETCH_USER} from './type';
+import { FETCH_USER} from '../config/type';
 import axios from 'axios';
 import { endpoints } from '../config/endpoints'
-import { useDispatch } from 'react-redux';
 
-export const login = (username, password) =>  { 
-    return async (dispatch )=>{
-        const token = await axios.post(endpoints.login, {username, password})
-        localStorage.setItem('token', token.data.token)
-        localStorage.setItem('tokenTime', new Date())
-        const user = await axios.get(endpoints.currentUser, getAuthHeader())
-        dispatch({type: 'FETCH_USER', payload: user.data})
-    }
-   
+export const login = (username, password) => async (dispatch)=> { 
+    const token = await axios.post(endpoints.login, {username, password})
+    localStorage.setItem('token', token.data.token)
+    localStorage.setItem('tokenTime', new Date())
+    const user = await axios.get(endpoints.currentUser, getAuthHeader())
+    dispatch({type: FETCH_USER, payload: user.data})
 }
 
 export const fetchUser = () => async dispatch => { 
-    console.log("fetchUser is being called")
     const user = await axios.get(endpoints.currentUser, getAuthHeader())
-    dispatch({type: 'FETCH_USER', payload: user.data})
+    dispatch({type: FETCH_USER, payload: user.data})
 }
 
 export const logout = () => {
@@ -30,9 +24,8 @@ export const getAuthHeader = () => {
     const token = getTokenWithExpiry();
     if(token) {
         return {headers: {Authorization: `Bearer ${token}` }};
-    } else {
-        return <Redirect to='/login' />
     }
+    return null;
 }
 
 const getTokenWithExpiry = () => {

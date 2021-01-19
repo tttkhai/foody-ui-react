@@ -24,8 +24,6 @@ const RightNavBar=()=>{
     }
 }
 
-
-
 export const Header = ()=>{
     return(
         <nav>

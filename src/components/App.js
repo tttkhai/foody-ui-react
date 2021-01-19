@@ -23,7 +23,7 @@ class App extends React.Component {
                   <Route exact path="/" component={SearchRestaurant} />
                   <Route exact path="/login" component={Formik} />
                   <Route path="/resgister" component={Register} />
-                  <Route path="/restaurant" component={RestaurantDetail} />
+                  <Route path="/restaurant/:id" component={RestaurantDetail} />
               </div>
           </BrowserRouter>
       </div>
