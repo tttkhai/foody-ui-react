@@ -1,4 +1,5 @@
 export const endpoints= {
     server: "http://localhost:8081/api/",
-    login: "/api/login",
+    login: "http://localhost:8081/api/login",
+    currentUser: "http://localhost:8081/api/currentUser"
 }

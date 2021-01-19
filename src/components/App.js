@@ -1,15 +1,15 @@
 import '../index.css';
 import React from 'react';
 import { connect } from 'react-redux';
-import * as actions from '../actions';
+import * as actions from '../services/authService';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { Login } from './Login';
+import Formik from './Login';
 import { SearchRestaurant } from './SearchRestaurant';
 import { RestaurantDetail } from './RestaurantDetail';
 import { Header } from './Header';
+import { Register } from './Register';
 
-
-class App extends React.Component() {
+class App extends React.Component {
   componentDidMount() {
     this.props.fetchUser();
   }
@@ -18,10 +18,10 @@ class App extends React.Component() {
     return (
       <div className="container">
           <BrowserRouter>
-              <div>
+              <div className="container">
                   <Header/>
                   <Route exact path="/" component={SearchRestaurant} />
-                  <Route exact path="/login" component={Login} />
+                  <Route exact path="/login" component={Formik} />
                   <Route path="/resgister" component={Register} />
                   <Route path="/restaurant" component={RestaurantDetail} />
               </div>

@@ -1,22 +1,30 @@
 import React from 'react';
 import { useSelector } from "react-redux";
 import { Link } from 'react-router-dom';
+import { logout } from '../services/authService';
+import { useDispatch } from 'react-redux';
 
-
-const renderContent=()=>{
+const RightNavBar=()=>{
     const { auth } = useSelector(state=>({...state}));
-    switch({auth}) {
+    let dispatch=useDispatch();
+    switch(auth) {
         case null:
             return;
         case false:
-            return <li><Link to='/login'> Login </Link></li>
+            return  <li><Link to='/login'> Login </Link></li>;
         default:
             return [
-            <li key="1">Hello {auth.first_name} {auth.last_name}</li>,
-            <li key="2"><Link to='/logout'> Logout </Link></li>
+            <li key="1">Hello {auth.first_name} {auth.last_name} </li>,
+            <li key="2" 
+            onClick={()=>{
+                logout();
+                dispatch({type: 'FETCH_USER', payload: null})
+            }}> Logout </li>
             ]
     }
 }
+
+
 
 export const Header = ()=>{
     return(
@@ -30,11 +38,10 @@ export const Header = ()=>{
                 </Link>
                 
                 <ul className="right">
-                {renderContent()}
+                {RightNavBar()}
                 </ul>
             </div>
         </nav>
     )
-    
-    
 }
+
