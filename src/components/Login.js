@@ -15,7 +15,9 @@ const Loginform = ({errors, touched})=>{
         <div>Password </div>
         <Field name="password" type="password" placeholder="password"/>
         <div>{touched && errors.password}</div>
-        <button type="submit">Login</button>
+        <button className="btn waves-effect waves-light" type="submit">Login
+            <i className="material-icons right">send</i>
+        </button>
         </Form>
     )
 }
