@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {fetchUser} from '../services/authService';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Formik from './Login';
-import { SearchRestaurant } from './SearchRestaurant';
+import { SearchRestaurant } from './search/SearchRestaurant';
 import { RestaurantDetail } from './RestaurantDetail';
 import { Header } from './Header';
 import { Register } from './Register';
