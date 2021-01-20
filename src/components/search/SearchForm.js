@@ -1,9 +1,12 @@
 import React, {useState} from 'react';
 import { withFormik, Form, Field } from "formik";
-
+import * as foodyService from '../../services/foodyService'
 
 const Search = ({values}) => {
     const [foodTypes, setFoodTypes]= useState();
+    useEffect(() => {
+        setFoodTypes(foodyService.getFoodTypes);
+    })
     return(
         <Form>
             <label>What kind of cuisine do you want?</label>
@@ -11,7 +14,7 @@ const Search = ({values}) => {
                 <option key="1" value="1">Item 1</option>
                 <option key="2" value="2">Item 3</option>
                 <option key="3" value="3">Item 2</option>
-                {/* {availableSelection.map(s => (
+                {/* {foodTypes.map(s => (
                 <option key={s} value={s}>
                     {s}
                 </option>
