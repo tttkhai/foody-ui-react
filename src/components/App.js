@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import {fetchUser} from '../services/authService';
 import { BrowserRouter, Route } from 'react-router-dom';
 import Formik from './Login';
-import { SearchRestaurant } from './search/SearchRestaurant';
+import { MainPage } from './MainPage';
 import { RestaurantDetail } from './RestaurantDetail';
 import { Header } from './Header';
 import { Register } from './Register';
@@ -19,7 +19,7 @@ const App =(props) => {
           <BrowserRouter>
               <div className="container">
                   <Header/>
-                  <Route exact path="/" component={SearchRestaurant} />
+                  <Route exact path="/" component={MainPage} />
                   <Route exact path="/login" component={Formik} />
                   <Route path="/resgister" component={Register} />
                   <Route path="/restaurant/:id" component={RestaurantDetail} />

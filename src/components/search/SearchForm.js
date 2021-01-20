@@ -1,41 +1,24 @@
-import React from 'react';
-import { withFormik, Field, Form} from 'formik';
+import React, {useState} from 'react';
+import { withFormik, Form, Field } from "formik";
 
 
-const Search = () => {
-    return (
+const Search = ({values}) => {
+    const [foodTypes, setFoodTypes]= useState();
+    return(
         <Form>
-            <div className="input-field col s12">
-                Check
-            {/* <Field 
-                name="cuisine" 
-                component="select"
-                placeholder="Choose your favorite cuisine"
-                multiple={true}
-            > */}
-            <Field
-                component="select"
-                name="names"
-                multiple={true}
-            >
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
+            <label>What kind of cuisine do you want?</label>
+            <Field component="select" name="names" style={{display: "inline-block"}}>
+                <option key="1" value="1">Item 1</option>
+                <option key="2" value="2">Item 3</option>
+                <option key="3" value="3">Item 2</option>
+                {/* {availableSelection.map(s => (
+                <option key={s} value={s}>
+                    {s}
+                </option>
+                ))} */}
             </Field>
-            </div>
-
-        {/* <div className="input-field col s12">
-            <select multiple>
-            <option value="" disabled selected>Choose your option</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-            <option value="3">Option 3</option>
-            </select>
-            <label>Materialize Multiple Select</label>
-        </div> */}
-            {/* <Field type="text"/> */}
         </Form>
-    )
+    );
 }
 
 export const SearchForm = withFormik({
