@@ -14,12 +14,14 @@ const RightNavBar=()=>{
             return  <li><Link to='/login'> Login </Link></li>;
         default:
             return [
-            <li key="1">Hello {auth.first_name} {auth.last_name} </li>,
+            <li key="1">Hello, {auth.first_name} {auth.last_name} </li>,
             <li key="2" 
-            onClick={()=>{
-                logout();
-                dispatch({type: 'FETCH_USER', payload: null})
-            }}> Logout </li>
+                style={{margin: '0 10px'}}
+                onClick={()=>{
+                    logout();
+                    dispatch({type: 'FETCH_USER', payload: null})
+                }}
+            > Logout </li>
             ]
     }
 }
@@ -29,6 +31,7 @@ export const Header = ()=>{
         <nav>
             <div className="nav-wrapper">
                 <Link 
+                    style={{marginLeft: '10px'}}
                     to='/'
                     className="left brand-logo"
                 >

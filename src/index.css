@@ -15,3 +15,8 @@ code {
 .dropdown {
   display: "inline-block";
 }
+
+.custom-select {
+  margin-bottom: 1rem;
+  max-width: 20rem;
+}
