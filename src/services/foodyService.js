@@ -3,11 +3,9 @@ import { endpoints } from '../config/endpoints'
 import { getAuthHeader } from './authService'
 
 export const getAllRestaurantTypes = () => { 
-    const restaurantTypes = await axios.post(endpoints.restaurantTypes, getAuthHeader())
-    return restaurantTypes;
+    return axios.get(endpoints.restaurantTypes, getAuthHeader())
 }
 
-export const getAllFoodTypes = () => async dispatch => { 
-    const foodTypes = await axios.post(endpoints.foodTypes, getAuthHeader())
-    return foodTypes;
+export const getAllFoodTypes = () => { 
+    return axios.get(endpoints.foodTypes, getAuthHeader())
 }
