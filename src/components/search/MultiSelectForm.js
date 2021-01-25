@@ -3,44 +3,29 @@ import Select from 'react-select';
 
 
 const MultiSelectForm= ({
-    className,
-    placeholder,
-    field,
-    form,
-    options,
-    isMulti
+    options, value,onChange,defaultValue,isMulti, label
 }) => {
-    const handleChange = value => {
-        // this is going to call setFieldValue and manually update values.topcis
-        this.props.onChange('topics', value);
-      };
-    // const getValue=()=>{
-    //     if()
-    // }
-    console.log("MultiSelectForm:options "+options)
-    console.log("MultiSelectForm:field "+field)
-    console.log("MultiSelectForm:form "+form)
-    console.log("MultiSelectForm: "+options)
-
+    // const handleChange = (value1) => {
+    //     onChange("cuisines", value1);
+    //   };
+    
+    // const handleBlur = () => {
+    //     // this is going to call setFieldTouched and manually update touched.topcis
+    //     onBlur("cuisines", true);
+    //   };
     return (
-        // <Select
-        // className={className}
-        // placeholder={placeholder} 
-        // field={field} 
-        // form={form} 
-        // options={options} 
-        // isMulti={isMulti}
-        // onChange={onChange}
-        // value={options ? options.find(option => option.value === field.value) : ''}
-        // >
+    <div >
+        <label>{label}</label>
         <Select
-            className={className}
-            options={options}
-            multi={true}
-            onChange={handleChange}
-            // value={this.props.value}
+        // styles={customStyles}
+        options={options} 
+        onChange={onChange}
+        defaultValue={defaultValue}
+        isMulti={isMulti}
+        // onBlur={handleBlur}
         />
-    )
+    </div>
+    );
 }
 
 export default MultiSelectForm;

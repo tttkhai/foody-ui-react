@@ -5,71 +5,85 @@ import  MultiSelectForm  from './MultiSelectForm';
 import Select from 'react-select';
 
 
-const Search = ({values, isMulti, setFieldValue}) => {
+import axios from 'axios';
+import { getAuthHeader } from '../../services/authService'
+
+
+const Search = ({ values, isMulti, setFieldValue, setFieldTouched}) => {
     const [foodTypes, setFoodTypes]= useState([]);
     const [restaurantTypes, setRestaurantTypes]= useState([]);
-    const arr =[1,2]
+    const distance = [
+        {value: 3, label: "< 3"},
+        {value: 5, label: "< 5"},
+        {value: 10, label: "< 10"},
+        {value: 20, label: "< 20"},
+    ]
+    function onChangeInput(value){
+        console.log(value);
+      }
+
     useEffect(() => {
         foodyService.getAllFoodTypes().then(result=>{
-            // map(result =>{
-            // setFoodTypes(arr)
             setFoodTypes(result.data)
-        }
-            // })
-        )
+        })
 
         foodyService.getAllRestaurantTypes().then(result =>{
             setRestaurantTypes(result.data);
+            console.log("resta"+JSON.stringify(result.data))
         })
-       
     }, [])
 
+    console.log("Check:"+JSON.stringify(foodTypes))
     return(
         <Form>
-            <label>What kind of cuisine do you want?</label>
-            {/* <MultiSelectForm 
-                // component={} 
-                // component="select"
-                name="cuisine" 
-                // defaultValue={'DEFAULT'} 
-                style={{display: "inline-block"}} 
-                className="custom-select" 
-                onChange={setFieldValue}
+            <MultiSelectForm 
+                options={foodTypes.map((option) => ({
+                    value: option,
+                    label: option.food_type
+                }))} 
+                onChange={onChangeInput}
+                // onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                style={{display: "inline-block"}}
                 isMulti={true}
-                options={foodTypes}
-            /> */}
-                {/* <option value="DEFAULT" disabled>Choose your cuisine ...</option>
-                {foodTypes.map(item => (
-                <option key={item.id} value={item.food_type}>
-                    {item.food_type}
-                </option>
-                ))} */}
-            {/* </Field> */}
-
-            <label>What kind of cuisine do you want?</label>
-            <Select
-            className="custom-select" 
-            options={arr}
-            multi={true}
-            // onChange={handleChange}
-            value={arr}
-        />
-            <label>What kind of restaurant do you want?</label>
-            <Field component="select" name="names" defaultValue={'DEFAULT'} style={{display: "inline-block"}}>
-                    <option value="DEFAULT" disabled>Choose your restaurant type ...</option>
-                {restaurantTypes.map(item => (
-                <option key={item.id} value={item.type_name}>
-                    {item.type_name}
-                </option>
-                ))}
-            </Field>
+                defaultValue={'DEFAULT'}
+                label={"What kind of cuisine do you want?"}
+              />
+            <MultiSelectForm 
+                options={restaurantTypes.map((option) => ({
+                    value: option,
+                    label: option.type_name
+                }))} 
+                onChange={onChangeInput}
+                // onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                style={{display: "inline-block"}}
+                isMulti={true}
+                defaultValue={'DEFAULT'}
+                label={"What kind of restaurant do you want?"}
+              />
+            <MultiSelectForm 
+                options={distance} 
+                onChange={onChangeInput}
+                // onChange={setFieldValue}
+                onBlur={setFieldTouched}
+                style={{display: "inline-block"}}
+                isMulti={true}
+                defaultValue={'DEFAULT'}
+                label={"How far?"}
+              />
         </Form>
     );
 }
 
 export const SearchForm = withFormik({
-    mapPropsToValues(){
-    }, handleSubmit(){
-
+    mapPropsToValues({cuisines, restaurantTypes}){
+        return {
+            cuisines: cuisines || [],
+            restaurantTypes: restaurantTypes || []
+        }
+        
+    }, handleSubmit(values){
+        console.log("This is values after submit: "+JSON.stringify(values))
     }
 })(Search)
