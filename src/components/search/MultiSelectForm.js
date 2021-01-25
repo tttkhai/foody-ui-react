@@ -3,26 +3,27 @@ import Select from 'react-select';
 
 
 const MultiSelectForm= ({
-    options, value,onChange,defaultValue,isMulti, label
+    options,onChange,onBlur,isMulti, label, name
 }) => {
-    // const handleChange = (value1) => {
-    //     onChange("cuisines", value1);
-    //   };
+    const handleChange = (value1) => {
+        console.log("Look: "+JSON.stringify(value1))
+        onChange(name, value1);
+    };
     
-    // const handleBlur = () => {
-    //     // this is going to call setFieldTouched and manually update touched.topcis
-    //     onBlur("cuisines", true);
-    //   };
+    const handleBlur = () => {
+        // this is going to call setFieldTouched and manually update touched.topcis
+        onBlur(name, true);
+      };
     return (
     <div >
         <label>{label}</label>
         <Select
         // styles={customStyles}
+        name={name}
         options={options} 
-        onChange={onChange}
-        defaultValue={defaultValue}
+        onChange={handleChange}
         isMulti={isMulti}
-        // onBlur={handleBlur}
+        onBlur={handleBlur}
         />
     </div>
     );
