@@ -1,24 +1,26 @@
 import React, {useState, useEffect} from 'react';
-import { withFormik, Form, Field } from "formik";
+import { withFormik, Form } from "formik";
 import * as foodyService from '../../services/foodyService'
 import  MultiSelectForm  from './MultiSelectForm';
-
+import { connect } from 'react-redux';
+import { submitSearchForm } from '../../services/foodyService';
 import _ from 'lodash';
 
 
 const Search = ({ setFieldValue, setFieldTouched }) => {
     useEffect(() => {
-        foodyService.getAllFoodTypes().then(result=>{
+        foodyService.fetchFoodTypes().then(result=>{
             setFoodTypes(result.data)
         })
 
-        foodyService.getAllRestaurantTypes().then(result =>{
+        foodyService.fetchRestaurantTypes().then(result =>{
             setRestaurantTypes(result.data);
         })
     }, [])
 
     const [foodTypes, setFoodTypes]= useState([]);
     const [restaurantTypes, setRestaurantTypes]= useState([]);
+    // const [results, setResults]= useState([]);
 
     const distance = [
         {value: 3, label: "< 3"},
@@ -29,7 +31,7 @@ const Search = ({ setFieldValue, setFieldTouched }) => {
    
     const formField=[
         {
-            name: 'cuisine',
+            name: 'foodTypes',
             options: foodTypes.map((option) => ({
                 value: option,
                 label: option.food_type
@@ -85,20 +87,23 @@ const Search = ({ setFieldValue, setFieldTouched }) => {
     );
 }
 
-export const SearchForm = withFormik({
-    mapPropsToValues({cuisines, restaurantTypes, distance}){
+const SearchForm = withFormik({
+    mapPropsToValues({foodTypes, restaurantTypes, distance}){
         return {
-            cuisines: cuisines || [],
+            foodTypes: foodTypes || [],
             restaurantTypes: restaurantTypes || [],
             distance: distance || 10
         }
         
-    }, handleSubmit(values, {cuisines, restaurantTypes, distance}){
-        const payload = [{
-            cuisines: values.cuisines.map(r => r.value),
+    }, handleSubmit(values, {props}){
+        const payload = {
+            foodTypes: values.foodTypes.map(r => r.value),
             restaurantTypes: values.restaurantTypes.map(r => r.value),
             distance: values.distance.value
-        }]
+        }
         console.log("This is values after submit: "+JSON.stringify(payload))
+        props.submitSearchForm(payload);
     }
 })(Search)
+
+export default connect(null, {submitSearchForm}) (SearchForm);

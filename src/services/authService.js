@@ -54,6 +54,6 @@ const diff_hours = (dt2, dt1) => {
     return Math.abs(diff.toFixed(2));
 }
 
-export const register = (values) => async dispatch => {
-    const newUser = await axios.post('/api/newUser', values)
+export const register = (values) => {
+    return axios.post('/api/newUser', values)
 }

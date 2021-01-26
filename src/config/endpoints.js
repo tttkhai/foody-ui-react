@@ -3,7 +3,7 @@ export const endpoints= {
     currentUser: "/api/currentUser",
     foodTypes: "/api/foodTypes",
     restaurantTypes: "/api/restaurantTypes",
-    restaurantResultFromSearch: "/api/restaurantList",
+    restaurantResultFromSearch: "/api/search/restaurantList",
     allRestaurants: "/api/restaurants",
     restaurantById: "/restaurant/:id"
 }

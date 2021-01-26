@@ -5,9 +5,8 @@ import Select from 'react-select';
 const MultiSelectForm= ({
     options,onChange,onBlur,isMulti, label, name
 }) => {
-    const handleChange = (value1) => {
-        console.log("Look: "+JSON.stringify(value1))
-        onChange(name, value1);
+    const handleChange = (value) => {
+        onChange(name, value);
     };
     
     const handleBlur = () => {
