@@ -20,7 +20,7 @@ const Search = ({ setFieldValue, setFieldTouched }) => {
 
     const [foodTypes, setFoodTypes]= useState([]);
     const [restaurantTypes, setRestaurantTypes]= useState([]);
-    // const [results, setResults]= useState([]);
+    
 
     const distance = [
         {value: 3, label: "< 3"},
@@ -37,7 +37,7 @@ const Search = ({ setFieldValue, setFieldTouched }) => {
                 label: option.food_type
             })), 
             isMulti: true,
-            label: 'What kind of cuisine do you want?',
+            label: 'What kind of food type do you want?',
             key: 1
         },
         {
@@ -47,14 +47,14 @@ const Search = ({ setFieldValue, setFieldTouched }) => {
                 label: option.type_name
             })), 
             isMulti: true,
-            label: 'What kind of restaurant do you want?',
+            label: 'What kind of cuisine do you want?',
             key: 2
         },
         {
             name: 'distance',
             options: distance,
             isMulti: false,
-            label: 'How far?',
+            label: 'How far? (in miles)',
             key: 3
         }
     ]
@@ -96,13 +96,22 @@ const SearchForm = withFormik({
         }
         
     }, handleSubmit(values, {props}){
-        const payload = {
-            foodTypes: values.foodTypes.map(r => r.value),
-            restaurantTypes: values.restaurantTypes.map(r => r.value),
-            distance: values.distance.value
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const payload = {
+                    food_types: values.foodTypes.map(r => r.value.id),
+                    cuisine: values.restaurantTypes.map(r => r.value.id),
+                    distance: values.distance.value,
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                }
+                console.log("This is values after submit: "+JSON.stringify(payload))
+                props.submitSearchForm(payload);
+            })
+        } else {
+            alert("Geolocation is not supported by this browser.");
         }
-        console.log("This is values after submit: "+JSON.stringify(payload))
-        props.submitSearchForm(payload);
+        
     }
 })(Search)
 

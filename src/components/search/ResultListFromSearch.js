@@ -18,18 +18,6 @@ const ResultListFromSearch = () => {
             </div>
             )
     }
-    // if(restaurantList.length==0){
-    //     return (<div></div>)
-    // } else {
-    //     return (
-    //         <div>
-    //             {restaurantList.map(restaurant=>{
-    //                 return (<div key={restaurant.id}>restaurant.name </div>)
-    //             })}
-    //         </div>
-    //     )
-    // }
-    
 }
 
 export default ResultListFromSearch
