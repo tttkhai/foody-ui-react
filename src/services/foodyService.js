@@ -12,6 +12,6 @@ export const fetchFoodTypes = () => {
 }
 
 export const submitSearchForm = (payload) => async dispatch => { 
-    const res = axios.post(endpoints.restaurantResultFromSearch, payload, getAuthHeader())
-    dispatch({ type: SEARCH_RESTAURANT, payload: res.data})
+    const res = await axios.post(endpoints.restaurantResultFromSearch, payload, getAuthHeader())
+    dispatch({ type: SEARCH_RESTAURANT, payload: res.data })
 }
