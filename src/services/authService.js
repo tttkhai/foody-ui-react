@@ -3,21 +3,26 @@ import axios from 'axios';
 import { endpoints } from '../config/endpoints'
 
 export const login = (username, password) => async (dispatch)=> { 
-    const token = await axios.post(endpoints.login, {username, password})
-    localStorage.setItem('token', token.data.token)
+    const res = await axios.post(endpoints.login, {username, password})
+    localStorage.setItem('token', res.data.token)
     localStorage.setItem('tokenTime', new Date())
-    const user = await axios.get(endpoints.currentUser, getAuthHeader())
-    dispatch({type: FETCH_USER, payload: user.data})
+    const currentUser=({'user_id': res.data.user_id, 'username': res.data.user_name, 'first_name':res.data.first_name, 'last_name':res.data.last_name});
+    localStorage.setItem('currentUser', JSON.stringify(currentUser))
+    dispatch({type: FETCH_USER, payload: currentUser})
 }
 
 export const fetchUser = () => async dispatch => { 
-    const user = await axios.get(endpoints.currentUser, getAuthHeader())
-    dispatch({type: FETCH_USER, payload: user.data})
+    const currentUser= localStorage.getItem('currentUser')
+    if(!currentUser){
+        return;
+    }
+    dispatch({type: FETCH_USER, payload: JSON.parse(currentUser)})
 }
 
 export const logout = () => {
     localStorage.removeItem('token')
     localStorage.removeItem('tokenTime')
+    localStorage.removeItem('currentUser')
 }
 
 export const getAuthHeader = () => {
@@ -42,7 +47,10 @@ const getTokenWithExpiry = () => {
 	if (diff>8) {
 		// If the item is expired, delete the item from storage
 		// and return null
-		localStorage.removeItem('token')
+        localStorage.removeItem('token')
+        localStorage.removeItem('tokenTime')
+        localStorage.removeItem('currentUser')
+        
 		return null
 	}
 	return token
@@ -54,6 +62,6 @@ const diff_hours = (dt2, dt1) => {
     return Math.abs(diff.toFixed(2));
 }
 
-export const register = (values) => {
-    return axios.post('/api/newUser', values)
-}
+// export const register = (values) => {
+//     return axios.post('/api/newUser', values)
+// }
