@@ -6,8 +6,6 @@ const ResultListFromSearch = ({restaurant}) => {
     switch(restaurant){
         case null:
             return(<></>);
-        case false:
-            return(<></>);
         default:
             if(restaurant.length<=0){
                 return <div>No results</div>
