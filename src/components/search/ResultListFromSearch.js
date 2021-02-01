@@ -1,8 +1,6 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 
-const ResultListFromSearch = () => {
-    const { restaurant } = useSelector(state=> ({...state}))
+const ResultListFromSearch = ({restaurant}) => {
     const displayColumn=['Name', 'Address', 'Phone Number', 'Distance']
     console.log("restaurantList: "+JSON.stringify(restaurant))
     switch(restaurant){

@@ -1,2 +1,1 @@
 export const FETCH_USER='FETCH_USER';
-export const SEARCH_RESTAURANT='SEARCH_RESTAURANT';
