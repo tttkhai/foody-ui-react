@@ -2,12 +2,11 @@ import React, {useState, useEffect} from 'react';
 import { withFormik, Form } from "formik";
 import * as foodyService from '../../services/foodyService'
 import  MultiSelectForm  from './MultiSelectForm';
-import ResultListFromSearch from './ResultListFromSearch';
 
 import _ from 'lodash';
 
 
-const Search = ({ status, setFieldValue, setFieldTouched }) => {
+const Search = (values, { setFieldValue, setFieldTouched, onSubmit }) => {
     useEffect(() => {
         foodyService.fetchFoodTypes().then(result=>{
             setFoodTypes(result.data)
@@ -76,21 +75,14 @@ const Search = ({ status, setFieldValue, setFieldTouched }) => {
         }))
     }
 
-    const ResultListFromSearchRender=()=>{
-        if(status && status.restaurant) {
-            return (<ResultListFromSearch restaurant={status.restaurant}/>)
-        }
-    }
-
     return(
         <>
-        <Form>
+        <Form onSubmit={()=>onSubmit(values)}>
             {FormRender()}
-            <button className="btn waves-effect waves-light" type="submit">Submit
+            <button className="btn waves-effect waves-light" style={{marginTop: '10px'}} type="submit">Submit
             <i className="material-icons right">send</i>
         </button>
         </Form>
-        {ResultListFromSearchRender()}
         </>
     );
 }
@@ -101,25 +93,6 @@ const SearchForm = withFormik({
             foodTypes: foodTypes || [],
             restaurantTypes: restaurantTypes || [],
             distance: distance || 10
-        }
-    }, handleSubmit(values, {setStatus, props}){
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                const payload = {
-                    food_types: values.foodTypes.map(r => r.value.id),
-                    cuisine: values.restaurantTypes.map(r => r.value.id),
-                    distance: values.distance.value,
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude
-                }
-                console.log("This is values after submit: "+JSON.stringify(payload))
-
-                foodyService.submitSearchForm(payload).then(res=>{
-                    setStatus({restaurant: res.data})
-                });
-            })
-        } else {
-            alert("Geolocation is not supported by this browser.");
         }
     }
 })(Search)

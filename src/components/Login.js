@@ -29,7 +29,6 @@ const Formik = withFormik({
             password: password || '',
         }
     }, async handleSubmit(values, { props }){
-        console.log("handlesubmit being clicked");
         await props.login(values.username, values.password);
         props.history.push('/');
     }

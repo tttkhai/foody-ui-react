@@ -17,7 +17,6 @@ const MultiSelectForm= ({
     <div >
         <label>{label}</label>
         <Select
-        // styles={customStyles}
         name={name}
         options={options} 
         onChange={handleChange}

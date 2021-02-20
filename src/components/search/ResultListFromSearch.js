@@ -1,13 +1,13 @@
 import React from 'react';
 
-const ResultListFromSearch = ({restaurant}) => {
+const ResultListFromSearch = ({restaurantSearchResult}) => {
     const displayColumn=['Name', 'Address', 'Phone Number', 'Distance']
-    console.log("restaurantList: "+JSON.stringify(restaurant))
-    switch(restaurant){
+    console.log("restaurantList in Form: "+JSON.stringify(restaurantSearchResult))
+    switch(restaurantSearchResult){
         case null:
             return(<></>);
         default:
-            if(restaurant.length<=0){
+            if(restaurantSearchResult.length<=0){
                 return <div>No results</div>
             } else {
                 return (
@@ -22,7 +22,7 @@ const ResultListFromSearch = ({restaurant}) => {
                             </tr>
                             </thead>
                             <tbody>
-                            {restaurant.map(res=>{
+                            {restaurantSearchResult.map(res=>{
                                 return (
                                     <tr key={res.id}>
                                         <td>{res.name}</td>
