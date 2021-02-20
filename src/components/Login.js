@@ -4,17 +4,17 @@ import * as actions from '../services/authService'
 import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import {compose} from "redux"; 
+import * as Yup from 'yup';
 
 const Loginform = ({errors, touched})=>{
     return(
         <Form>
-        <div>{ errors.permission }</div>
-        <div>Username </div>
+        <div >{ errors.permission }</div>
         <Field name="username" type="text" placeholder="username"/>
-        <div>{ touched &&errors.username}</div>
+        <div className="error">{ touched &&errors.username}</div>
         <div>Password </div>
         <Field name="password" type="password" placeholder="password"/>
-        <div>{touched && errors.password}</div>
+        <div className="error">{touched && errors.password}</div>
         <button className="btn waves-effect waves-light" type="submit">Login
             <i className="material-icons right">send</i>
         </button>
@@ -28,7 +28,10 @@ const Formik = withFormik({
             username: username || '',
             password: password || '',
         }
-    }, async handleSubmit(values, { props }){
+    }, validationSchema: Yup.object().shape({
+        username: Yup.string().required(),
+        password: Yup.string().required(),
+    }), async handleSubmit(values, { props }){
         await props.login(values.username, values.password);
         props.history.push('/');
     }
